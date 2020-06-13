@@ -42,4 +42,7 @@ ul,li{
 a{
   text-decoration: none;
 }
+input{
+  outline: none;
+}
 </style>

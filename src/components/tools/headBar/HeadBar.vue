@@ -21,7 +21,7 @@
           <a href>漫画</a>
         </li>
         <li class="item">
-          <a href>赛事</a>
+          <router-link to="/tieba">贴吧</router-link>
         </li>
       </ul>
     </div>
@@ -71,7 +71,7 @@
           <a href="" class="regi">注册</a>
         </div>
       </div>
-      <span class="tg" @click="tougao">投稿</span>
+        <span class="tg" @click="tougao">投稿</span>
     </div>
   </div>
 </template>
@@ -83,7 +83,7 @@ export default {
   props: ["avatar"],
   methods: {
     tougao(){
-      
+      this.$router.push('/tougao')
     }
   }
 };

@@ -11,7 +11,7 @@
               />
             </div>
             <div class="h_basic">
-              <div class="h_name">{{user.user_name}}</div>
+              <div class="h_name">{{user&&user.user_name}}</div>
               <div class="h_input">
                 <input type="text" />
               </div>
@@ -44,14 +44,14 @@
               <span class="iconfont icon-dingyue"></span>
               <span class="n_text">订阅</span>
             </a>
-            <a href>
+            <router-link :to="{name:'shopcar'}">
               <span class="iconfont icon-shoucang"></span>
-              <span class="n_text">收藏</span>
-            </a>
-            <a href>
+              <span class="n_text">购物车</span>
+            </router-link>
+            <router-link :to="{name:'setting'}">
               <span class="iconfont icon-shezhi"></span>
               <span class="n_text">设置</span>
-            </a>
+            </router-link>
           </div>
           <div class="n_statistics">
             <a href>
