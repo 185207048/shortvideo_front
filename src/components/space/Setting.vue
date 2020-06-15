@@ -4,37 +4,47 @@
       <el-card :body-style="{ padding: 0 }">
         <div class="card">
           <el-container style="height:100%">
-            <el-aside width="150px">
-              <el-menu
-                default-active="2"
-                class="el-menu-vertical-demo"
-                @open="handleOpen"
-                @close="handleClose"
-              >
-                <el-menu-item index="1">
-                  <i class="el-icon-menu"></i>
-                  <span slot="title">更改头像</span>
-                </el-menu-item>
-                <el-menu-item index="2">
-                  <i class="el-icon-document"></i>
-                  <span slot="title">更改密码</span>
-                </el-menu-item>
-                <el-menu-item index="3">
-                  <i class="el-icon-setting"></i>
-                  <span slot="title">设置昵称</span>
-                </el-menu-item>
-              </el-menu>
-            </el-aside>
-            <el-container>
-              <el-header >请修改密码</el-header>
-              <el-main>
-                <el-form>
+            <el-tabs tab-position="left" style="height: 200px;">
+              <el-tab-pane label="更改密码">
+                <el-form
+                  :model="ruleForm"
+                  status-icon
+                  :rules="rules"
+                  ref="ruleForm"
+                  label-width="100px"
+                  class="demo-ruleForm"
+                >
+                  <el-form-item label="密码" prop="pass">
+                    <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+                  </el-form-item>
+                  <el-form-item label="确认密码" prop="checkPass">
+                    <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+                  </el-form-item>
                   <el-form-item>
-                    <el-input label="新密码"/>
+                    <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+                    <el-button @click="resetForm('ruleForm')">重置</el-button>
                   </el-form-item>
                 </el-form>
-              </el-main>
-            </el-container>
+              </el-tab-pane>
+              <el-tab-pane label="更改头像">
+                <el-upload>
+                  <el-upload
+                    class="avatar-uploader"
+                    action="https://jsonplaceholder.typicode.com/posts/"
+                    :show-file-list="false"
+                    :on-success="handleAvatarSuccess"
+                    :before-upload="beforeAvatarUpload"
+                  >
+                    <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+                    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+                  </el-upload>
+                </el-upload>
+              </el-tab-pane>
+              <el-tab-pane label="更改签名">
+                <el-input v-model="assign" placeholder="新签名" style="marginTop:50px"></el-input>
+                <el-button type="warning" style="marginTop:20px">修改</el-button>
+              </el-tab-pane>
+            </el-tabs>
           </el-container>
         </div>
       </el-card>
@@ -43,7 +53,55 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  data() {
+    var validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else {
+        if (this.ruleForm.checkPass !== "") {
+          this.$refs.ruleForm.validateField("checkPass");
+        }
+        callback();
+      }
+    };
+    var validatePass2 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.ruleForm.pass) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
+    return {
+      ruleForm: {
+        pass: "",
+        checkPass: "",
+        assign: ""
+      },
+      rules: {
+        pass: [{ validator: validatePass, trigger: "blur" }],
+        checkPass: [{ validator: validatePass2, trigger: "blur" }]
+      }
+    };
+  },
+  methods: {
+    submitForm(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          alert("submit!");
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    }
+  }
+};
 </script>
 <style lang="less" scoped>
 .content {
@@ -54,10 +112,37 @@ export default {};
   .card {
     width: 980px;
     height: 550px;
-    .el-aside {
-      // height: 100%;
-      background-color: #eee;
+    .demo-ruleForm {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
   }
+}
+.avatar-uploader  {
+  .el-upload{
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+}
+  .el-upload:hover {
+  border-color: #409eff;
+  }
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
 }
 </style>
