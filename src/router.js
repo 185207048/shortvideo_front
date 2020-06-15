@@ -11,6 +11,7 @@ import Tougao from './components/tougao/Tougao.vue'
 import Video from './components/videoPlay/Video.vue'
 import Peripheral from './components/peripheral/Peripheral.vue'
 import Tieba from './components/tieba/Tieba.vue'
+import Register from './components/register/Register.vue'
 
 
 Vue.use(Router)
@@ -55,6 +56,10 @@ const router = new Router({
         {
             path:'/login',
             component: Login
+        },
+        {
+            path:'/register',
+            component: Register
         },
         {
             path:'/tougao',

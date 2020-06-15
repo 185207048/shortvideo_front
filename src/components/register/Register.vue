@@ -1,7 +1,7 @@
 <template>
   <div class="back">
     <div class="card">
-      <div class="headline">登录</div>
+      <div class="headline">注册</div>
       <el-form
         style="loginForm"
         :model="ruleForm"
@@ -13,74 +13,75 @@
         label-position="left"
         >
         <el-form-item label="用户名" prop="username">
-          <el-input type="text" v-model="ruleForm.username" autocomplete="off"></el-input>
+          <el-input type="text" v-model="ruleForm.username" autocomplete="off" id="username"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
         </el-form-item>
+        <el-form-item label="确认" prop="password">
+          <el-input type="password" v-model="ruleForm.repassword" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="电话" prop="password">
+          <el-input type="password" v-model="ruleForm.phone" autocomplete="off"></el-input>
+        </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="login('a')">提交</el-button>
+          <el-button type="primary" @click="register">提交</el-button>
           <el-button @click="resetForm('a')">重置</el-button>
+          
         </el-form-item>
       </el-form>
     </div>
   </div>
 </template>
 <script>
+// import Register from "../../util/util.js"
 import axios from 'axios'
 export default {
+  
   data() {
     return {
       ruleForm: {
         username: "",
-        password: ""
+        password: "",
+        phone:""
       },
       rules: {
         username: [
           { required: true, message: "请输入用户名", trigger: "blur" },
-          { min: 6, max: 10, message: "长度在 5 个字符以上", trigger: "blur" }
+          { min: 6, max: 10, message: "长度在 3 到 5 个字符", trigger: "blur" }
         ],
         password: [
           { required: true, message: "请输入密码", trigger: "blur" },
           { min: 6, message: "长度大于6个字符", trigger: "blur" }
+        
+        ],
+        repassword: [
+          { required: true, message: "请输入密码", trigger: "blur" },
+          { min: 6, message: "长度大于6个字符", trigger: "blur" }
+        
+        ],
+        phone:[
+          { required: true, message: "请输入电话", trigger: "blur" },
+          { min: 6, message: "电话格式不正确", trigger: "blur" }
         ]
+
       }
     };
   },
   methods: {
     
-    login() {
-      // let data = new FormData();
-
-      // console.log(this.data.ruleForm.username)
-      // console.log(this.ruleForm.username)
-      axios.post("http://localhost:8084/user/userCheckAll")
+    register(){
+      let data = new FormData();
+      data.append("user_username",this.ruleForm.username);
+      data.append("user_password",this.ruleForm.password);
+      data.append("user_phone",this.ruleForm.phone);
+      axios.post("http://localhost:8084/user/register",data)
         .then(res=>{
             if(res.data){
-              // let user_name = this.data.ruleForm.username
-              res.data.map((user)=>{
-                // console.log(user.user_username)
-                // console.log(this.ruleForm.username)
-                if(user.user_username == this.ruleForm.username && user.user_password == this.ruleForm.password){
-                  console.log(user)
-                  window.sessionStorage.setItem('user_name',this.ruleForm.username)
-                  window.sessionStorage.setItem('user_id',user.user_id)
-                  // console.log(res.data)
-                  this.$router.push({name:'/master'})
-                  
-                  
-                }
-              })
-              // alert("用户名密码不正确")
-            }else{
-              alert("用户名或密码不正确")
+              this.$router.push({name:'/master'})
             }          
         })
     },
-    resetForm(a) {
-      this.$refs[a].resetFields();
-    },
-
   }
 };
 </script>
@@ -115,7 +116,7 @@ export default {
     background-size: 100%;
   }
   .loginForm {
-    width: 150px;
+    width: 180px;
     height: 150px;
   }
 }

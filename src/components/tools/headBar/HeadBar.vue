@@ -38,6 +38,7 @@
         <li class="item">
           <router-link to="/space">
             <img :src="avatar" alt />
+            <img src="//static.hdslb.com/images/akari.jpg" alt />
           </router-link>
         </li>
         <li class="item">
@@ -67,9 +68,11 @@
             </router-link>
           </span>
         </div>
+        <router-link to="/register">
         <div class="item">
           <a href="" class="regi">注册</a>
         </div>
+         </router-link>
       </div>
         <span class="tg" @click="tougao">投稿</span>
     </div>
@@ -104,7 +107,7 @@ export default {
     flex-shrink: 0;
   }
   .nav-search {
-    width: 500px;
+    width: 300px;
     margin: 0 10px;
     form {
       position: relative;
@@ -164,7 +167,7 @@ export default {
     .icon {
       display: flex;
       align-items: center;
-      width: 340px;
+      width: 360px;
       flex-shrink: 0;
     }
     .logout {

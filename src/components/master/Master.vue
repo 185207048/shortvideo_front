@@ -2,7 +2,7 @@
   <div>
     <div class="header">
       <div class="m_banner">
-        <HeadBar :avatar="user&&user.user_header" />
+        <HeadBar :avatar="user" />
       </div>
       <div class="m_wrapper">
         <div class="primaryPageTab">
@@ -113,7 +113,8 @@ import VideoShow from "../tools/video/VideoShow";
 import VideoModel from "../tools/video/VideoModel";
 export default {
   mounted() {
-    this.user = JSON.parse(window.sessionStorage.getItem("user"));
+    this.user = window.sessionStorage.getItem("user");
+    console.log(this.user)
   },
   data() {
     return {
