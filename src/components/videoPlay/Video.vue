@@ -1,7 +1,7 @@
  <template>
   <div class="all">
     <div class="top">
-      <HeadBar :avatar="user&&user.user_header" />
+      <HeadBar :avatar="user" />
     </div>
     <div class="bottom">
       <div class="b_left">
@@ -37,7 +37,7 @@
               id="myVideo"
               style="width:100%;height:100%;float:left；padding: 0px"
               controls="controls"
-              src="./缘结神.mp4"
+              :src="video&&video.videoHref.split('^')[1]"
               type="video/mp4"
             ></video>
           </div>
@@ -196,7 +196,7 @@ export default {
       throttleGap: 5000,
       barrageList: [],
       message: "显示",
-
+      video: null,
       isShow_danmu: true,
       advertising_show: true,
       star_like: 1,
@@ -217,10 +217,11 @@ export default {
     };
   },
   mounted() {
+        this.video = this.$route.query.video;
     this.addToList();
-    this.user = JSON.parse(window.sessionStorage.getItem("user"));
+    this.user = JSON.parse(window.localStorage.getItem("user"));
   },
-  components:{
+  components: {
     HeadBar
   },
   methods: {

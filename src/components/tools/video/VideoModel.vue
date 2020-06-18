@@ -4,7 +4,7 @@
       <div class="title">这里是分类视频</div>
       <div class="content">
         <div class="card" v-for="(item,index) in imgList" :key="index">
-          <VideoShow :img="item" />
+          <VideoShow :video="item" />
           <div class="up"></div>
         </div>
       </div>

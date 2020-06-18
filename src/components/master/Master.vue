@@ -2,7 +2,7 @@
   <div>
     <div class="header">
       <div class="m_banner">
-        <HeadBar :avatar="user" />
+        <HeadBar :avatar="this.user" />
       </div>
       <div class="m_wrapper">
         <div class="primaryPageTab">
@@ -113,49 +113,27 @@ import VideoShow from "../tools/video/VideoShow";
 import VideoModel from "../tools/video/VideoModel";
 export default {
   mounted() {
-    this.user = window.sessionStorage.getItem("user");
+    this.user = window.localStorage.getItem("user");
     console.log(this.user)
+    this.$http.get(`video`)
+    .then(res=>{
+      console.log(res.data)
+      this.img1 = res.data
+    })
   },
   data() {
     return {
-      vlist: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      vlist: [],
       vModel: [1, 2, 3],
       user: null,
       lunboImg: [
-        "http://localhost:8085/static/lunbo1.jpg",
-        "http://localhost:8085/static/lunbo2.jpg",
-        "http://localhost:8085/static/lunbo3.png",
-        "http://localhost:8085/static/lunbo4.jpg"
       ],
       img1: [
-        "http://localhost:8085/static/lunbo1.jpg",
-        "http://localhost:8085/static/lunbo2.jpg",
-        "http://localhost:8085/static/lunbo3.png",
-        "http://localhost:8085/static/lunbo4.jpg",
-        "http://localhost:8085/static/lunbo1.jpg",
-        "http://localhost:8085/static/lunbo2.jpg",
-        "http://localhost:8085/static/lunbo3.png",
-        "http://localhost:8085/static/lunbo4.jpg",
-        "http://localhost:8085/static/lunbo1.jpg",
-        "http://localhost:8085/static/lunbo2.jpg",
       ],
       img2:[
-        "http://localhost:8085/static/lunbo1.jpg",
-        "http://localhost:8085/static/lunbo2.jpg",
-        "http://localhost:8085/static/lunbo3.png",
-        "http://localhost:8085/static/lunbo4.jpg",
-        "http://localhost:8085/static/lunbo1.jpg",
-        "http://localhost:8085/static/lunbo2.jpg",
-        "http://localhost:8085/static/lunbo3.png",
-        "http://localhost:8085/static/lunbo4.jpg",
-        "http://localhost:8085/static/lunbo1.jpg",
-        "http://localhost:8085/static/lunbo2.jpg",
-        "http://localhost:8085/static/lunbo1.jpg",
-        "http://localhost:8085/static/lunbo2.jpg",
+
       ],
       rightImg:[
-        "http://localhost:8085/static/lunbo5.png",
-        "http://localhost:8085/static/lunbo6.jpg",
         ]
     };
   },

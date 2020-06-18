@@ -56,6 +56,7 @@ const router = new Router({
         {
             path:'/login',
             component: Login
+            
         },
         {
             path:'/register',
@@ -86,7 +87,7 @@ const router = new Router({
 })
 router.beforeEach((to, from, next) => {
     if (to.path === "/login") return next()
-    const tokenStr = window.sessionStorage.getItem("user")
+    const tokenStr = window.localStorage.getItem("user")
     if (to.path === "/tougao"&&!tokenStr) return next("/login")
     next()
 })

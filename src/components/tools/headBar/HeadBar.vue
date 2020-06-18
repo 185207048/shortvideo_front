@@ -37,8 +37,7 @@
       <ul class="icon" v-if="avatar">
         <li class="item">
           <router-link to="/space">
-            <img :src="avatar" alt />
-            <img src="//static.hdslb.com/images/akari.jpg" alt />
+            <img :src="avatar.userHeader?avatar.userHeader:'//static.hdslb.com/images/akari.jpg'" alt />
           </router-link>
         </li>
         <li class="item">

@@ -1,6 +1,6 @@
 <template>
   <div style="background-color:	#F7F7F7">
-    <HeadBar :avatar="user&&user.user_header"/>
+    <HeadBar :avatar="user"/>
     <div class="h">
       <div class="h_inner">
         <div class="h_user">
@@ -83,7 +83,7 @@ export default {
     }
   },
   mounted(){
-    this.user = JSON.parse(window.sessionStorage.getItem('user'))
+    this.user = JSON.parse(window.localStorage.getItem('user'))
     console.log(this.user)
   },
   components:{

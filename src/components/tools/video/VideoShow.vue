@@ -1,15 +1,20 @@
 <template>
   <div class="video-card-reco">
-    <router-link to="/video">
-    <img  :src="img"/>
+    <router-link :to="{path:'/video',query:{video}}" >
+    <img  :src="video.videoHref.split('^')[0]"/>
     </router-link>
   </div>
 </template>
 <script>
 export default {
-  props:['img'],
+  mounted(){
+    this.a()
+  },
+  props:['video'],
   methods:{
-
+    a(){
+      console.log(this.video.videoHref.split('^')[0])
+    }
   }
 };
 </script>
