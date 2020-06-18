@@ -101,7 +101,7 @@
       </div>
       
       <div class="recommend-box">
-        <VideoShow v-for="(item,index) in img1" :img="item" :key="index" />
+        <VideoShow v-for="(item,index) in img1" :video="item" :key="index" />
       </div>
     </div>
     <VideoModel v-for="(item,index) in vModel" :imgList="img2" :rightImg="rightImg" :key="index" />
@@ -161,7 +161,6 @@ export default {
     box-shadow: inset 0 0 100px #111;
     background-position: center 0;
     margin-left: calc(- (1903px - 100%) / 2);
-    background-image: url("http://localhost:8085/static/masterBack.png");
   }
   .m_wrapper {
     width: 1630px;

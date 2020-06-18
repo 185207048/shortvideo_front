@@ -13,8 +13,8 @@
       </div>
     </div>
     <el-dialog title="购买" :visible.sync="buyDialog" width="20%">
-        <img src="http://localhost:8085/zhoubian1.jpeg" alt="" style="width:200px;height:300px;verticalAlign: middle;marginRight:20px">
-          <span style="fontSize:30px">￥ </span>
+        <img src="../../assets/img/1.png" alt="" style="width:200px;height:300px;verticalAlign: middle;marginRight:20px">
+          <span style="fontSize:30px">￥ {{50}}</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="buyDialog = false">取 消</el-button>
         <el-button type="warning" @click="buyDialog = false">加入购物车</el-button>
@@ -31,7 +31,17 @@ export default {
   data() {
     return {
       user: null,
-      list: [1, 2, 3, 4, 5, 6, 7, 8],
+      list:[
+        '../../assets/img/1.png',
+        '../../assets/img/2.png',
+        '../../assets/img/3.png',
+        '../../assets/img/4.png',
+        '../../assets/img/5.png',
+        '../../assets/img/6.png',
+        '../../assets/img/7.png',
+        '../../assets/img/8.png',
+        '../../assets/img/9.png',
+      ],
       price: 5,
       buyDialog: false
     };
@@ -74,7 +84,7 @@ export default {
       width: 175px;
       height: 233px;
       background-size: 100%;
-      background-image: url("http://localhost:8085/zhoubian1.jpeg");
+      background-image: url("../../assets/img/1.png");
     }
     
   }

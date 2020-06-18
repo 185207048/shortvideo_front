@@ -1,181 +1,62 @@
  <template>
   <div class="all">
     <div class="top">
-      <HeadBar :avatar="user" />
+      <HeadBar :avatar="this.user||null" />
     </div>
-    <div class="bottom">
-      <div class="b_left">
-        <div class="b_left_top">
-          <div class="b_left_top_title">
-            <b style="margin-left: 20px; font-size:2rem">标题</b>
-            <br />
-            <span id="style_top" style="height:30px;margin-left: 20px;margin-right: 20px;">类型</span>
-            <span id="time_top" style="margin-left: 20px;margin-right: 20px;">时间</span>
-            <br />
-            <span id="num_Play" style="margin-left: 20px;margin-right: 20px;">播放量</span>
-            <span id="num_bulletScreen" style="margin-left: 20px;margin-right: 20px;">弹幕</span>
-            <img id="stop" style="width: 15px;height: 12px" src="./禁止.jpg" />
-            <span style="margin-left:5px;margin-right: 20px;">未经允许，禁止转载</span>
-          </div>
-        </div>
-        <div class="TV">
-          <div style="border: 0;width:100%;height:85%;float:left; magrin:0px;padding: 0px">
-            <vue-baberrage
-              style="width:700px;height:300px"
-              v-show="isShow_danmu"
-              :isShow="barrageIsShow"
-              :barrageList="barrageList"
-              :maxWordCount="maxWordCount"
-              :throttleGap="throttleGap"
-              :loop="barrageLoop"
-              :boxHeight="boxHeight"
-              :messageHeight="messageHeight"
-            ></vue-baberrage>
 
-            <video
-              @click="suspend"
-              id="myVideo"
-              style="width:100%;height:100%;float:left；padding: 0px"
-              controls="controls"
-              :src="video&&video.videoHref.split('^')[1]"
-              type="video/mp4"
-            ></video>
+    <el-container>
+      <el-main>
+        <div style="display:flex;justifyContent: center;alignItems: center;flexDirection:column">
+          <vue-baberrage
+      :isShow= "barrageIsShow"
+      :barrageList = "barrageList"
+      :loop = "barrageLoop"
+      style="width:800px;height:300px"
+      >
+    </vue-baberrage>
+          <video
+            id="myVideo"
+            width="800px"
+            height="500px"
+            controls="controls"
+            :src="videoHref&&videoHref.split('^')[1]"
+            type="video/mp4"
+          ></video>
+          <div>
+            <el-input style="width:400px !important" placeholder="请输入弹幕" v-model="myDanmu" />
+            <el-button type="primary" @click="addToList">发送</el-button>
           </div>
-          <div style="border: 0;width:100%;height:10%; margin:0px;padding:0px 0px;float:left">
-            <img
-              v-if="star_like1"
-              @click="suspend"
-              src="./picture/播放/播放.png"
-              style="width:40px;height:40px;margin-left:10px;padding:0px 0px"
-              alt
-            />
-            <img
-              v-if="star_like2"
-              @click="suspend"
-              src="./picture/播放/暂停.png"
-              style="width:40px;height:40px;margin-left:10px;padding:0px 0px"
-              alt
-            />
 
-            <button
-              class="danmuxianshi"
-              style="margin-left:50px；margin"
-              @click="DanmuIsShow"
-            >{{message}}弹幕</button>
-            <div style="width:20%;height=5%;float:right">
-              <p style="color:gray;font-size:5%">
-                请选择倍数播放
-                <select name id="rate">
-                  <option value="0.5">0.5</option>
-                  <option value="1" selected="selected">1</option>
-                  <option value="1.5">1.5</option>
-                  <option value="2">2</option>
-                </select>
-              </p>
-            </div>
+          <div>
+            <span>点赞 |</span>
+            <span>投币 |</span>
+            <span>收藏</span>
           </div>
         </div>
-        <div class="btn">
-          <img
-            v-if="click_like1"
-            @click="like"
-            src="./picture/点赞/点赞1.png"
-            style="width:30px;height:30px;margin-left:20px;margin-right:10px"
-            alt
-          />
-          <img
-            v-if="click_like2"
-            @click="like"
-            src="./picture/点赞/点赞2.png"
-            style="width:30px;height:30px;margin-left:20px;margin-right:10px"
-            alt
-          />
-          <span>{{click_number}}</span>
-          <img
-            v-if="start_like1"
-            @click="start_num"
-            src="./picture/收藏/收藏1.png"
-            style="width:30px;height:30px;margin-left:20px;margin-right:10px"
-            alt
-          />
-          <img
-            v-if="start_like2"
-            @click="start_num"
-            src="./picture/收藏/收藏2.png"
-            style="width:30px;height:30px;margin-left:20px;margin-right:10px"
-            alt
-          />
-          <span>{{start_number}}</span>
-          <img
-            @click="share_num"
-            src="./picture/转发/转发2.png"
-            style="width:30px;height:30px;margin-left:20px;margin-right:10px"
-            alt
-          />
-          <span>{{share_number}}</span>
-        </div>
-        <div class="text">
-          <div class="text_one"></div>
-          <div class="text_two">
-            <b>其他信息：</b>
-            <p>软件：</p>
-            <p>BGM:</p>
+      </el-main>
+      <el-aside width="400px">
+        <el-card :body-style="{width:'300px',height:'400px'}">
+          <div>
+            <div>视频信息</div>
+            <span>作者：{{'小小'}}</span>
+            <img src="//static.hdslb.com/images/akari.jpg" style="width:150px;height:150px" alt />
+            <div>简介</div>
+            <h3>aaaaaaaaaa</h3>
           </div>
-          <ul class="ul_style">
-            <li>
-              <a href="./">动画</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="b_right">
-        <div class="people">
-          <img
-            style="width:30%; height: 90px; float:left;  border-radius: 50%"
-            src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3064584167,3502823640&fm=26&gp=0.jpg"
-            alt
-          />
-          <div style="width:70%;float:left">
-            <span style="margin-top:0px ;margin-left:10px">昵称:</span>
-            <br />
-            <span style="margin-left:10px">个性签名...</span>
-          </div>
-        </div>
-        <div
-          v-show="advertising_show"
-          onclick="window.open('http://www.baidu.com')"
-          class="advertising"
-        >
+        </el-card>
+        <el-card :body-style="{width:'300px',height:'450px'}">
           <div
-            @click="close_advertising"
-            class="advertising_close"
-            style="width:30px;height:30px;float:right;margin-top:0px;background-color:gray"
-          ></div>
-        </div>
-        <div>
-          <h2>相关推荐</h2>
-        </div>
-        <div class="tj">
-          <div
-            style="width:100%;height:150px;background-color:white"
-            onclick="window.open('http://www.baidu.com')"
+            style="borderBottom:1px solid #a1a1a1;width:300px;height:150px"
+            @click="toBuy"
+            v-for="(item,index) in newZhoubian"
+            :key="index"
           >
-            <img src="./关闭.png" style="height:150px;width:150px;float:left" alt />
-            <div style>
-              <font size="10px">1111</font>
-              <br />
-              <span>
-                <font size="3px" color="gray">作者</font>
-              </span>
-              <br />
-              <span>
-                <font size="3px" color="gray">{{click_number }}播放量 · {{start_number}}弹幕数量</font>
-              </span>
-            </div>
+            <img src="../../assets/img/1.png" style="width:100px;height:100px" alt />
+            <span>好吃的好玩的都有</span>
           </div>
-        </div>
-      </div>
-    </div>
+        </el-card>
+      </el-aside>
+    </el-container>
   </div>
 </template>
 <script>
@@ -185,305 +66,66 @@ import HeadBar from "../tools/headBar/HeadBar";
 import { vueBaberrage, MESSAGE_TYPE } from "vue-baberrage";
 Vue.use(vueBaberrage);
 export default {
+  mounted() {
+    let { videoHref } = this.$route.query.video;
+    this.videoHref = videoHref;
+    this.user = JSON.parse(window.localStorage.getItem("user"));
+    this.getZhoubian();
+  },
   data() {
     return {
-      msg: "王帅~",
+      msg: 'Hello vue-baberrage',
       barrageIsShow: true,
-      messageHeight: 3,
-      boxHeight: 100,
-      barrageLoop: true,
-      maxWordCount: 3,
-      throttleGap: 5000,
+      currentId : 0,
+      barrageLoop: false,
       barrageList: [],
-      message: "显示",
-      video: null,
-      isShow_danmu: true,
-      advertising_show: true,
-      star_like: 1,
-      star_like1: true,
-      star_like2: false,
-      click_like: 1,
-      click_like1: true,
-      click_like2: false,
-      click_number: 1,
-      start_like: 1,
-      start_like1: true,
-      start_like2: false,
-      start_number: 2,
-      share_like: 1,
-      share_like1: true,
-      share_like2: false,
-      share_number: 3
+      myDanmu: "",
+      zhoubian: [
+        "../../assets/img/1.png",
+        "../../assets/img/2.png",
+        "../../assets/img/3.png",
+        "../../assets/img/4.png",
+        "../../assets/img/5.png",
+        "../../assets/img/6.png",
+        "../../assets/img/7.png",
+        "../../assets/img/8.png",
+        "../../assets/img/9.png"
+      ],
+      newZhoubian: [],
+      videoHref: "",
+      user: null
     };
   },
-  mounted() {
-        this.video = this.$route.query.video;
-    this.addToList();
-    this.user = JSON.parse(window.localStorage.getItem("user"));
+  methods: {
+    addToList() {
+      this.barrageList.push({
+        id: ++this.currentId,
+        avatar: "./static/avatar.jpg",
+        msg: this.myDanmu,
+        time: 5,
+        type: MESSAGE_TYPE.NORMAL
+      });
+      this.myDanmu = "";
+    },
+    getZhoubian() {
+      for (let i = 0; i < 3; i++) {
+        this.newZhoubian.push(
+          this.zhoubian[Math.floor(Math.random() * this.zhoubian.length)]
+        );
+      }
+      console.log(this.newZhoubian);
+    },
+    toBuy() {
+      this.$router.push("/peripheral");
+    }
   },
   components: {
     HeadBar
-  },
-  methods: {
-    DanmuIsShow() {
-      this.isShow_danmu = !this.isShow_danmu;
-      if (this.isShow_danmu == true) {
-        this.message = "关闭";
-      } else {
-        this.message = "显示";
-      }
-    },
-    addToList() {
-      // eslint-disable-next-line no-unused-vars
-      let list = [
-        {
-          id: 1,
-          avatar:
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3064584167,3502823640&fm=26&gp=0.jpg",
-          msg: this.msg,
-          time: 3,
-          barrageStyle: "red"
-        },
-        {
-          id: 2,
-          avatar:
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3064584167,3502823640&fm=26&gp=0.jpg",
-          msg: this.msg,
-          time: 6,
-          barrageStyle: "red"
-        },
-        {
-          id: 3,
-          avatar:
-            "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3064584167,3502823640&fm=26&gp=0.jpg",
-          msg: this.msg,
-          time: 4,
-          barrageStyle: "red"
-        }
-      ];
-      list.forEach(v => {
-        this.barrageList.push({
-          id: v.id,
-          avatar: v.avatar,
-          msg: v.msg,
-          time: v.time,
-          type: MESSAGE_TYPE.NORMAL,
-          barrageStyle: v.barrageStyle
-        });
-      });
-    },
-    suspend() {
-      var myVideo = document.getElementById("myVideo");
-      var sel = document.getElementById("rate");
-      sel.addEventListener("change", function() {
-        myVideo.playbackRate = this.value;
-      });
-      if (myVideo.paused) {
-        this.star_like1 = !this.star_like1;
-        this.star_like2 = !this.star_like2;
-        this.star_like = this.star_like - 1;
-        myVideo.play();
-      } else if (myVideo.play()) {
-        this.star_like1 = !this.star_like1;
-        this.star_like2 = !this.star_like2;
-        this.star_like = this.star_like + 1;
-        myVideo.pause();
-      }
-      myVideo = document.getElementById("myVideo");
-      myVideo.ontimeupdate = function() {
-        console.log(this.currentTime, this.duration);
-        this.videoTime = document.getElementById("myVideo").duration.innerHtml;
-      };
-    },
-    chose_rate() {
-      var sel = document.getElementById("rate");
-      sel.addEventListener("change", function() {
-        // eslint-disable-next-line no-undef
-        myVideo.playbackRate = this.value;
-        // eslint-disable-next-line no-undef
-        myVideo.play;
-      });
-    },
-
-    like() {
-      if (this.click_like == 1) {
-        this.click_like1 = !this.click_like1;
-        this.click_like2 = !this.click_like2;
-        this.click_like = this.click_like - 1;
-        this.click_number = this.click_number + 1;
-      } else {
-        this.click_like1 = !this.click_like1;
-        this.click_like2 = !this.click_like2;
-        this.click_like = this.click_like + 1;
-        this.click_number = this.click_number - 1;
-      }
-    },
-    start_num() {
-      if (this.start_like == 1) {
-        this.start_like1 = !this.start_like1;
-        this.start_like2 = !this.start_like2;
-        this.start_like = this.start_like - 1;
-        this.start_number = this.start_number + 1;
-      } else {
-        this.start_like1 = !this.start_like1;
-        this.start_like2 = !this.start_like2;
-        this.start_like = this.start_like + 1;
-        this.start_number = this.start_number - 1;
-      }
-    },
-    share_num() {
-      this.share_number = this.share_number + 1;
-    },
-    close_advertising: function() {
-      this.advertising_show = !this.advertising_show;
-    }
   }
 };
 </script>
-
-<style lang="less" scoped>
-.baberrage-top {
-  height: 300px;
-}
-
-.baberrage-lane {
-  height: 300px;
-}
-.baberrage-bottom {
-  height: 300px;
-}
-.barrages-drop {
-  height: 300px;
-  .blue {
-    border-radius: 100px;
-    background: #e6ff75;
-    color: #fff;
-  }
-  .green {
-    border-radius: 100px;
-    background: #75ffcd;
-    color: #fff;
-  }
-  .red {
-    border-radius: 100px;
-    background: #e68fba;
-    color: #fff;
-  }
-  .yellow {
-    border-radius: 100px;
-    background: #dfc795;
-    color: #fff;
-  }
-  .baberrage-stage {
-    position: absolute;
-    width: 300px;
-    height: 212px;
-    overflow: hidden;
-    top: 0;
-    margin-top: 130px;
-  }
-}
-
-.all {
-  height: 100%;
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 20px;
-  box-sizing: border-box;
-  background: antiquewhite;
-  padding: 0;
-}
-.top {
-  width: 100%;
-  height: 250px;
-  background: url("./背景.jpg") no-repeat;
-  background-size: 1400px 300px;
-  background-position: 0 -50px;
-  overflow: hidden;
-}
-.top img {
-  height: 100%;
-  width: 100%;
-}
-.bottom {
-  display: flex;
-}
-.bottom > .b_left {
-  height: 1200px;
-  width: 65%;
-  background: rgb(230, 203, 255);
-  padding: 10px;
-}
-.bottom > .b_right {
-  height: 1220px;
-  width: 35%;
-  background: rgb(241, 216, 216);
-}
-.bottom > .b_left div {
-  margin: 10px auto;
-  width: 85%;
-}
-.bottom > .b_left > .b_left_top {
-  height: 150px;
-  background: white;
-  background-color: aqua;
-}
-.bottom > .b_left > .b_left_top > .b_left_top_title {
-  height: 50%;
-  margin: 0px auto;
-}
-.TV {
-  width: 650px;
-  height: 500px;
-  background: black;
-}
-
-.btn {
-  background: rgb(255, 255, 255);
-}
-.bottom > .b_left > .btn > .icon {
-  margin-left: 20px;
-}
-.bottom > .b_left > .btn > .danmuxianshi {
-  margin-left: 20px;
-}
-.bottom > .b_left > .btn.save {
-  width: 100px;
-  height: 100px;
-}
-.bottom > .b_left > .text {
-  height: 400px;
-  background: rgb(196, 248, 211);
-}
-.bottom > .b_left > .text > .ul_style {
-  list-style: none;
-  list-style-type: border;
-}
-/* ------------------------------- */
-.bottom > .b_right div {
-  width: 85%;
-  margin: 10px auto;
-}
-.people {
-  height: 100px;
-  background: white;
-}
-
-.advertising {
-  height: 300px;
-  background: url("./preview.jpg");
-  background-size: cover;
-}
-.advertising_close {
-  background: url("./关闭.png");
-  background-size: cover;
-}
-.tj {
-  height: 700px;
-  background: rgb(234, 181, 241);
-}
-video::-webkit-media-controls-play-button {
-  display: none;
+ <style>
+.aside {
+  background-color: #fff;
 }
 </style>

@@ -7,14 +7,9 @@
 </template>
 <script>
 export default {
-  mounted(){
-    this.a()
-  },
   props:['video'],
-  methods:{
-    a(){
-      console.log(this.video.videoHref.split('^')[0])
-    }
+  mounted(){
+    console.log(this.video)
   }
 };
 </script>
